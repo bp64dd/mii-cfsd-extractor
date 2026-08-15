@@ -44,7 +44,7 @@ export function decryptMiiQr(payload: Uint8Array): Uint8Array {
 export function readMiiName(cfsd: Uint8Array): string {
   let name = "";
   for (let i = 0x1a; i < 0x1a + 20; i += 2) {
-    const code = cfsd[i] | (cfsd[i + 1] << 8);
+    const code = (cfsd[i] ?? 0) | ((cfsd[i + 1] ?? 0) << 8);
     if (code === 0) break;
     name += String.fromCharCode(code);
   }
