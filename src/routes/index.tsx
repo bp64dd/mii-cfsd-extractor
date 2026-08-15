@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
 import jsQR from "jsqr";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { decryptMiiQr, readMiiName, toHexDump, CFSD_SIZE } from "@/lib/mii-qr";
 
 export const Route = createFileRoute("/")({
