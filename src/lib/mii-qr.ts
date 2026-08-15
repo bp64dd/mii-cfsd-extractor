@@ -20,23 +20,25 @@ export function decryptMiiQr(payload: Uint8Array): Uint8Array {
       `QR payload is ${payload.length} bytes; a Mii QR code carries at least 112 bytes.`,
     );
   }
-  const data = payload.subarray(0, 0x70);
-  const nonce = data.subarray(0, 8);
-  const ciphertext = data.subarray(8, 0x70);
+  // Work with plain number arrays: aes-js mishandles typed-array views that
+  // have a non-zero byteOffset ("offset is out of bounds").
+  const data = Array.from(payload.slice(0, 0x70));
+  const nonce = data.slice(0, 8);
+  const ciphertext = data.slice(8, 0x70);
 
   // CCM decryption is AES-CTR over counter blocks A_i (i starting at 1).
-  const counter = new Uint8Array(16);
+  const counter = new Array<number>(16).fill(0);
   counter[0] = 0x02; // flags for a 12-byte nonce (q = 3)
-  counter.set(nonce, 1);
+  for (let i = 0; i < 8; i += 1) counter[1 + i] = nonce[i] ?? 0;
   counter[15] = 1;
 
   const ctr = new aesjs.ModeOfOperation.ctr(MII_KEY, new aesjs.Counter(counter));
-  const plain = ctr.decrypt(ciphertext).subarray(0, 0x58);
+  const plain = Array.from(ctr.decrypt(ciphertext)).slice(0, 0x58);
 
   const out = new Uint8Array(CFSD_SIZE);
-  out.set(plain.subarray(0, 0x0c), 0);
+  out.set(plain.slice(0, 0x0c), 0);
   out.set(nonce, 0x0c);
-  out.set(plain.subarray(0x0c), 0x14);
+  out.set(plain.slice(0x0c), 0x14);
   return out;
 }
 
