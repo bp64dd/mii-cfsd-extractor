@@ -86,17 +86,10 @@ function Index() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-6 py-16">
-      <header className="space-y-3">
-        <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-          Mii toolkit
-        </p>
+      <header>
         <h1 className="text-4xl font-bold tracking-tight text-foreground">
           Mii QR code → .cfsd extractor
         </h1>
-        <p className="max-w-xl text-sm text-muted-foreground">
-          Drop a Nintendo 3DS Mii QR code image. The embedded payload is decrypted locally and saved
-          as a {CFSD_SIZE}-byte <code>.cfsd</code> Mii record. Nothing is uploaded anywhere.
-        </p>
       </header>
 
       <div
