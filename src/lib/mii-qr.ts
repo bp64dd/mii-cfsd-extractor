@@ -5,11 +5,11 @@ const MII_KEY = [
   0x59, 0xfc, 0x81, 0x7e, 0x64, 0x46, 0xea, 0x61, 0x90, 0x34, 0x7b, 0x20, 0xe9, 0xbd, 0xce, 0x52,
 ];
 
-export const CFSD_SIZE = 0x5c;
+export const CFSD_SIZE = 0x60;
 
 /**
  * Decrypt the 0x70-byte payload embedded in a 3DS Mii QR code into the
- * 0x5C-byte CFSD (Mii character) record.
+ * 96-byte CFSD (FFLStoreData)  (Mii character) record.
  *
  * Layout: [nonce(8)][ciphertext(0x58) + CCM tag(0x10)]
  * The nonce is re-inserted at offset 0x0C of the plaintext.
