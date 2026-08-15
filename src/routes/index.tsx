@@ -87,10 +87,11 @@ function Index() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 px-6 py-16">
-      <header>
+      <header className="flex items-start justify-between gap-4">
         <h1 className="text-4xl font-bold tracking-tight text-foreground">
           Mii QR code → .cfsd extractor
         </h1>
+        <ThemeToggle />
       </header>
 
       <div
